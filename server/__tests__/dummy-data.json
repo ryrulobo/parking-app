@@ -1,0 +1,204 @@
+{
+  "ParkingData": [
+    {
+      "id": 1,
+      "vehicleType": "mobil",
+      "startTime": "2022-11-22T13:00:00.000Z",
+      "endTime": "2022-11-22T18:01:00.000Z",
+      "parkingFee": 30000,
+      "createdAt": "2022-11-21T20:03:10.122Z",
+      "updatedAt": "2022-11-21T20:03:10.122Z",
+      "licensePlate": "L2312AS"
+    },
+    {
+      "id": 2,
+      "vehicleType": "mobil",
+      "startTime": "2022-11-22T13:00:00.000Z",
+      "endTime": "2022-11-22T18:01:00.000Z",
+      "parkingFee": 30000,
+      "createdAt": "2022-11-21T20:05:15.221Z",
+      "updatedAt": "2022-11-21T20:05:15.221Z",
+      "licensePlate": "L2312AS"
+    },
+    {
+      "id": 3,
+      "vehicleType": "motor",
+      "startTime": "2022-11-22T13:00:00.000Z",
+      "endTime": "2022-11-22T18:01:00.000Z",
+      "parkingFee": 30000,
+      "createdAt": "2022-11-23T06:02:47.198Z",
+      "updatedAt": "2022-11-23T06:02:47.198Z",
+      "licensePlate": "L2312AS"
+    },
+    {
+      "id": 4,
+      "vehicleType": "mobil",
+      "startTime": "2022-11-08T06:15:00.000Z",
+      "endTime": "2022-11-23T09:15:00.000Z",
+      "parkingFee": 1215000,
+      "createdAt": "2022-11-23T06:15:45.535Z",
+      "updatedAt": "2022-11-23T06:15:45.535Z",
+      "licensePlate": "L2312AS"
+    },
+    {
+      "id": 5,
+      "vehicleType": "mobil",
+      "startTime": "2022-11-08T06:15:00.000Z",
+      "endTime": "2022-11-08T09:15:00.000Z",
+      "parkingFee": 15000,
+      "createdAt": "2022-11-23T06:16:03.855Z",
+      "updatedAt": "2022-11-23T06:16:03.855Z",
+      "licensePlate": "L2312AS"
+    },
+    {
+      "id": 6,
+      "vehicleType": "mobil",
+      "startTime": "2023-01-01T07:37:00.000Z",
+      "endTime": "2023-01-12T07:37:00.000Z",
+      "parkingFee": 80000,
+      "createdAt": "2022-11-23T07:39:29.450Z",
+      "updatedAt": "2022-11-23T07:39:29.450Z",
+      "licensePlate": "B123NAS"
+    },
+    {
+      "id": 7,
+      "vehicleType": "mobil",
+      "startTime": "2023-01-02T07:37:00.000Z",
+      "endTime": "2023-01-03T07:37:00.000Z",
+      "parkingFee": 80000,
+      "createdAt": "2022-11-23T07:39:40.951Z",
+      "updatedAt": "2022-11-23T07:39:40.951Z",
+      "licensePlate": "B123NAS"
+    },
+    {
+      "id": 8,
+      "vehicleType": "mobil",
+      "startTime": "2023-01-03T07:37:00.000Z",
+      "endTime": "2023-01-04T07:37:00.000Z",
+      "parkingFee": 80000,
+      "createdAt": "2022-11-23T07:39:50.390Z",
+      "updatedAt": "2022-11-23T07:39:50.390Z",
+      "licensePlate": "B123NAS"
+    },
+    {
+      "id": 9,
+      "vehicleType": "motor",
+      "startTime": "2022-11-10T07:37:00.000Z",
+      "endTime": "2022-11-11T07:37:00.000Z",
+      "parkingFee": 80000,
+      "createdAt": "2022-11-23T07:41:13.341Z",
+      "updatedAt": "2022-11-23T07:41:13.341Z",
+      "licensePlate": "B123NAS"
+    },
+    {
+      "id": 10,
+      "vehicleType": "motor",
+      "startTime": "2022-11-09T02:46:00.000Z",
+      "endTime": "2022-11-23T04:43:00.000Z",
+      "parkingFee": 1130000,
+      "createdAt": "2022-11-23T07:43:42.832Z",
+      "updatedAt": "2022-11-23T07:43:42.832Z",
+      "licensePlate": "B123NAS"
+    },
+    {
+      "id": 11,
+      "vehicleType": "motor",
+      "startTime": "2022-11-09T02:46:00.000Z",
+      "endTime": "2022-11-23T04:43:00.000Z",
+      "parkingFee": 1130000,
+      "createdAt": "2022-11-23T07:47:15.474Z",
+      "updatedAt": "2022-11-23T07:47:15.474Z",
+      "licensePlate": "B123NAS"
+    },
+    {
+      "id": 12,
+      "vehicleType": "motor",
+      "startTime": "2022-11-09T02:46:00.000Z",
+      "endTime": "2022-11-23T04:43:00.000Z",
+      "parkingFee": 1130000,
+      "createdAt": "2022-11-23T07:47:24.875Z",
+      "updatedAt": "2022-11-23T07:47:24.875Z",
+      "licensePlate": "B123NAS"
+    },
+    {
+      "id": 13,
+      "vehicleType": "motor",
+      "startTime": "2022-11-09T02:46:00.000Z",
+      "endTime": "2022-11-23T04:43:00.000Z",
+      "parkingFee": 1130000,
+      "createdAt": "2022-11-23T07:48:36.834Z",
+      "updatedAt": "2022-11-23T07:48:36.834Z",
+      "licensePlate": "B123NAS"
+    },
+    {
+      "id": 14,
+      "vehicleType": "motor",
+      "startTime": "2022-11-09T02:46:00.000Z",
+      "endTime": "2022-11-23T04:43:00.000Z",
+      "parkingFee": 1130000,
+      "createdAt": "2022-11-23T07:50:42.822Z",
+      "updatedAt": "2022-11-23T07:50:42.822Z",
+      "licensePlate": "B123NAS"
+    },
+    {
+      "id": 15,
+      "vehicleType": "motor",
+      "startTime": "2022-11-09T02:46:00.000Z",
+      "endTime": "2022-11-23T04:43:00.000Z",
+      "parkingFee": 1130000,
+      "createdAt": "2022-11-23T07:51:32.384Z",
+      "updatedAt": "2022-11-23T07:51:32.384Z",
+      "licensePlate": "B123NAS"
+    },
+    {
+      "id": 16,
+      "vehicleType": "motor",
+      "startTime": "2022-11-09T02:46:00.000Z",
+      "endTime": "2022-11-23T04:43:00.000Z",
+      "parkingFee": 1130000,
+      "createdAt": "2022-11-23T07:51:40.844Z",
+      "updatedAt": "2022-11-23T07:51:40.844Z",
+      "licensePlate": "B123NAS"
+    },
+    {
+      "id": 17,
+      "vehicleType": "motor",
+      "startTime": "2022-11-09T02:46:00.000Z",
+      "endTime": "2022-11-23T04:43:00.000Z",
+      "parkingFee": 1130000,
+      "createdAt": "2022-11-23T07:55:52.286Z",
+      "updatedAt": "2022-11-23T07:55:52.286Z",
+      "licensePlate": "B123NAS"
+    },
+    {
+      "id": 18,
+      "vehicleType": "motor",
+      "startTime": "2022-11-09T02:46:00.000Z",
+      "endTime": "2022-11-23T04:43:00.000Z",
+      "parkingFee": 1130000,
+      "createdAt": "2022-11-23T07:57:01.819Z",
+      "updatedAt": "2022-11-23T07:57:01.819Z",
+      "licensePlate": "B123NAS"
+    },
+    {
+      "id": 19,
+      "vehicleType": "motor",
+      "startTime": "2023-01-01T10:58:00.000Z",
+      "endTime": "2023-01-02T12:58:00.000Z",
+      "parkingFee": 10000,
+      "createdAt": "2022-11-23T07:58:17.548Z",
+      "updatedAt": "2022-11-23T07:58:17.548Z",
+      "licensePlate": "B8712JAS"
+    },
+    {
+      "id": 20,
+      "vehicleType": "motor",
+      "startTime": "2023-01-02T11:00:00.000Z",
+      "endTime": "2023-01-03T14:00:00.000Z",
+      "parkingFee": 15000,
+      "createdAt": "2022-11-23T08:01:17.376Z",
+      "updatedAt": "2022-11-23T08:01:17.376Z",
+      "licensePlate": "B1239ASK"
+    }
+  ]
+}

@@ -27,7 +27,7 @@ class ParkingController {
         parkingFee: result.total,
         licensePlate: licensePlate.toUpperCase(),
       });
-      res.status(200).json({ result });
+      res.status(201).json({ result });
     } catch (err) {
       next(err);
     }
@@ -35,7 +35,7 @@ class ParkingController {
 
   static async showAllData(req, res, next) {
     try {
-      let { type, startDate, endDate, page, size } = req.query;
+      let { type, startDate, endDate, page, size, min, max } = req.query;
       const { limit, offset } = getPagination(page - 1, size);
 
       const option = {
@@ -63,11 +63,28 @@ class ParkingController {
       }
 
       // 2. Shows data from start date until today
-      if (!!startDate & !endDate) {
+      if (!!startDate && !endDate) {
         startDate = new Date(startDate);
         option.where = {
           ...option.where,
-          startTime: { [Op.between]: [startDate, new Date()] },
+          endTime: { [Op.between]: [startDate, new Date()] },
+        };
+      }
+
+      //! Filter by parking fee
+      // 1. Shows data between 2 values
+      if (!!min && !!max) {
+        option.where = {
+          ...option.where,
+          parkingFee: { [Op.between]: [min, max] },
+        };
+      }
+
+      // 2. Shows data which is greater than given value
+      if (!!min && !max) {
+        option.where = {
+          ...option.where,
+          parkingFee: { [Op.gt]: min },
         };
       }
 
