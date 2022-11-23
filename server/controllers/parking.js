@@ -1,6 +1,8 @@
 const { ParkingData } = require("../models");
 const { parkingFee } = require("../helpers/calculateParkingFee");
 const { dateChecker } = require("../helpers/dateChecker");
+const { Op } = require("sequelize");
+const { getPagination } = require("../helpers/pagination");
 
 class ParkingController {
   static async add(req, res, next) {
@@ -33,9 +35,44 @@ class ParkingController {
 
   static async showAllData(req, res, next) {
     try {
-      let result = await ParkingData.findAll({
+      let { type, startDate, endDate, page, size } = req.query;
+      const { limit, offset } = getPagination(page - 1, size);
+
+      const option = {
         attributes: { exclude: ["createdAt", "updatedAt"] },
-      });
+        order: [["id", "DESC"]],
+        limit,
+        offset,
+      };
+
+      //! Filter by vehicle type
+      if (!!type) {
+        option.where = {
+          ...option.where,
+          vehicleType: { [Op.iLike]: `%${type}%` },
+        };
+      }
+
+      //! Filter by date
+      // 1. Shows data from start date to end date
+      if (!!startDate && !!endDate) {
+        option.where = {
+          ...option.where,
+          startTime: { [Op.between]: [startDate, endDate] },
+        };
+      }
+
+      // 2. Shows data from start date until today
+      if (!!startDate & !endDate) {
+        startDate = new Date(startDate);
+        option.where = {
+          ...option.where,
+          startTime: { [Op.between]: [startDate, new Date()] },
+        };
+      }
+
+      let result = await ParkingData.findAll(option);
+
       res.status(200).json({ result });
     } catch (err) {
       next(err);
