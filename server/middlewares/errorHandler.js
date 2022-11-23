@@ -38,6 +38,10 @@ function errorHandler(err, req, res, next) {
       errCode = 400;
       message = "License plate is required";
       break;
+    case "Invalid parking fee value":
+      errCode = 400;
+      message = "Min fee cannot be greater than the max fee";
+      break;
   }
   res.status(errCode).json({ message });
 }

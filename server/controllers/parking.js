@@ -38,9 +38,11 @@ class ParkingController {
       let { type, startDate, endDate, page, size, min, max } = req.query;
       const { limit, offset } = getPagination(page - 1, size);
 
+      if (min > max) throw { name: "Invalid parking fee value" };
+
       const option = {
         attributes: { exclude: ["createdAt", "updatedAt"] },
-        order: [["id", "DESC"]],
+        order: [["endTime", "DESC"]],
         limit,
         offset,
       };
@@ -85,6 +87,14 @@ class ParkingController {
         option.where = {
           ...option.where,
           parkingFee: { [Op.gt]: min },
+        };
+      }
+
+      // 3. Shows data which is smaller than given value
+      if (!min && !!max) {
+        option.where = {
+          ...option.where,
+          parkingFee: { [Op.between]: [0, max] },
         };
       }
 
