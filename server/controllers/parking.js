@@ -94,7 +94,7 @@ class ParkingController {
       if (!!min && !max) {
         option.where = {
           ...option.where,
-          parkingFee: { [Op.gt]: min },
+          parkingFee: { [Op.gte]: min },
         };
       }
 
