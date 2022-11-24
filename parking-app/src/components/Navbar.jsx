@@ -29,7 +29,7 @@ export default function Navbar() {
               </Link>
             ) : (
               <Link to="/" className="nav-link">
-                Add data
+                New data
               </Link>
             )}
             <li className="nav-item"></li>

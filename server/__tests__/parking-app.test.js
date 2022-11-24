@@ -148,25 +148,22 @@ describe("GET /parkings/data", () => {
 
     expect(response.status).toBe(200);
     expect(response.body).toBeInstanceOf(Object);
-    expect(response.body.result).toBeInstanceOf(Array);
-    expect(response.body.result[0]).toHaveProperty("id", expect.any(Number));
-    expect(response.body.result[0]).toHaveProperty(
+    expect(response.body.rows).toBeInstanceOf(Array);
+    expect(response.body.rows[0]).toHaveProperty("id", expect.any(Number));
+    expect(response.body.rows[0]).toHaveProperty(
       "vehicleType",
       expect.any(String)
     );
-    expect(response.body.result[0]).toHaveProperty(
+    expect(response.body.rows[0]).toHaveProperty(
       "startTime",
       expect.any(String)
     );
-    expect(response.body.result[0]).toHaveProperty(
-      "endTime",
-      expect.any(String)
-    );
-    expect(response.body.result[0]).toHaveProperty(
+    expect(response.body.rows[0]).toHaveProperty("endTime", expect.any(String));
+    expect(response.body.rows[0]).toHaveProperty(
       "parkingFee",
       expect.any(Number)
     );
-    expect(response.body.result[0]).toHaveProperty(
+    expect(response.body.rows[0]).toHaveProperty(
       "licensePlate",
       expect.any(String)
     );
@@ -177,8 +174,8 @@ describe("GET /parkings/data", () => {
 
     expect(response.status).toBe(200);
     expect(response.body).toBeInstanceOf(Object);
-    expect(response.body.result).toBeInstanceOf(Array);
-    expect(response.body.result[0]).toHaveProperty("vehicleType", "mobil");
+    expect(response.body.rows).toBeInstanceOf(Array);
+    expect(response.body.rows[0]).toHaveProperty("vehicleType", "mobil");
   });
 
   test("GET /parkings/data - success test - filter by date (between start and end date)", async () => {
@@ -190,26 +187,26 @@ describe("GET /parkings/data", () => {
     const response = await request(app).get(
       `/parkings/data?startDate=${start}&endDate=${end}`
     );
-    const len = response.body.result.length;
+    const len = response.body.count;
 
     expect(response.status).toBe(200);
     expect(response.body).toBeInstanceOf(Object);
-    expect(response.body.result).toBeInstanceOf(Array);
-    expect(response.body.result[0]).toHaveProperty(
+    expect(response.body.rows).toBeInstanceOf(Array);
+    expect(response.body.rows[0]).toHaveProperty(
       "startTime",
       expect.any(String)
     );
-    expect(response.body.result[len - 1]).toHaveProperty(
+    expect(response.body.rows[len - 1]).toHaveProperty(
       "endTime",
       expect.any(String)
     );
 
     // Check if the output match the date filter criteria
     const startResult = Number(
-      response.body.result[0].startTime.substring(8, 10)
+      response.body.rows[0].startTime.substring(8, 10)
     );
     const endResult = Number(
-      response.body.result[len - 1].endTime.substring(8, 10)
+      response.body.rows[len - 1].endTime.substring(8, 10)
     );
 
     expect(startResult).toBeGreaterThanOrEqual(startDate);
@@ -225,9 +222,9 @@ describe("GET /parkings/data", () => {
 
     expect(response.status).toBe(200);
     expect(response.body).toBeInstanceOf(Object);
-    expect(response.body.result).toBeInstanceOf(Array);
+    expect(response.body.rows).toBeInstanceOf(Array);
 
-    const feeCheck = response.body.result[0].parkingFee;
+    const feeCheck = response.body.rows[0].parkingFee;
     expect(feeCheck).toBeGreaterThanOrEqual(min);
     expect(feeCheck).toBeLessThanOrEqual(max);
   });
@@ -238,9 +235,49 @@ describe("GET /parkings/data", () => {
 
     expect(response.status).toBe(200);
     expect(response.body).toBeInstanceOf(Object);
-    expect(response.body.result).toBeInstanceOf(Array);
+    expect(response.body.rows).toBeInstanceOf(Array);
 
-    const feeCheck = response.body.result[0].parkingFee;
+    const feeCheck = response.body.rows[0].parkingFee;
     expect(feeCheck).toBeGreaterThan(min);
+  });
+
+  test("GET /parkings/data - failed test - filter by parking fee (min value greater than max value)", async () => {
+    const min = 100000;
+    const max = 50000;
+    const response = await request(app).get(
+      `/parkings/data?min=${min}&max=${max}`
+    );
+
+    expect(response.status).toBe(400);
+    expect(response.body).toBeInstanceOf(Object);
+    expect(response.body).toHaveProperty(
+      "message",
+      "Min fee cannot be greater than the max fee"
+    );
+  });
+
+  test("GET /parkings/data - success test - filter by vehicle plate number", async () => {
+    const response = await request(app).get(`/parkings/data?plate=nas`);
+
+    expect(response.status).toBe(200);
+    expect(response.body).toBeInstanceOf(Object);
+    expect(response.body.rows).toBeInstanceOf(Array);
+    expect(response.body.rows[0].licensePlate).toMatch(/[nas]/i);
+  });
+
+  test("GET /parkings/data - failed test - filter by date (start time greater than end time)", async () => {
+    const start = "2022-11-12";
+    const end = "2022-11-10";
+
+    const response = await request(app).get(
+      `/parkings/data?startDate=${start}&endDate=${end}`
+    );
+
+    expect(response.status).toBe(400);
+    expect(response.body).toBeInstanceOf(Object);
+    expect(response.body).toHaveProperty(
+      "message",
+      "Start date cannot be greater than the end date"
+    );
   });
 });

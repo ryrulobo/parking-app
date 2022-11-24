@@ -9,17 +9,19 @@ export default function Report() {
   const [reportData, setReportData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  // const [page, setPage] = useState(1);
-  // const [totalPage, setTotalPage] = useState(1);
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
 
   //! Filter
-  const [filter, setFilter] = useState({
+  const initialState = {
     vehicleType: "",
     min: "",
     max: "",
     startDate: "",
     endDate: "",
-  });
+    plate: "",
+  };
+  const [filter, setFilter] = useState(initialState);
 
   const filterHandler = (e) => {
     const { name, value } = e.target;
@@ -29,9 +31,13 @@ export default function Report() {
     });
   };
 
+  const clearFilter = (e) => {
+    setFilter({ ...initialState });
+  };
+
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [page]);
 
   //! Fetch data
   const fetchData = async () => {
@@ -39,34 +45,35 @@ export default function Report() {
       setIsLoading(true);
       let options = {
         method: "GET",
-        url: `http://localhost:3000/parkings/data?type=${filter.vehicleType}&min=${filter.min}&max=${filter.max}&startDate=${filter.startDate}&endDate=${filter.endDate}`,
+        url: `http://localhost:3000/parkings/data?page=${page}&type=${filter.vehicleType}&min=${filter.min}&max=${filter.max}&startDate=${filter.startDate}&endDate=${filter.endDate}&plate=${filter.plate}`,
       };
       const { data } = await axios(options);
-      setReportData(data.result);
-      // setTotalPage(data.result.length / 20);
+      setReportData(data.rows);
+      setTotalPage(Math.ceil(data.count / 20));
       setIsLoading(false);
     } catch (err) {
-      console.log(err);
-
       Swal.fire({
         icon: "error",
         title: err.response.data.message,
+        timer: 2500,
+      }).then(() => {
+        window.location.reload();
       });
     }
   };
 
   //! Pagination
-  // const nextPage = (e) => {
-  //   e.preventDefault();
-  //   if (page + 1 > totalPage) return;
-  //   setPage(page + 1);
-  // };
+  const nextPage = (e) => {
+    e.preventDefault();
+    if (page + 1 > totalPage) return;
+    setPage(page + 1);
+  };
 
-  // const prevPage = (e) => {
-  //   e.preventDefault();
-  //   if (page === 1) return;
-  //   setPage(page - 1);
-  // };
+  const prevPage = (e) => {
+    e.preventDefault();
+    if (page === 1) return;
+    setPage(page - 1);
+  };
 
   //! Loading
   if (isLoading) {
@@ -75,11 +82,11 @@ export default function Report() {
 
   return (
     <div>
+      {/* Filter */}
       <div className="container">
         <div className="p-2">
           <form
             onSubmit={(e) => {
-              e.preventDefault();
               fetchData();
             }}
           >
@@ -155,8 +162,31 @@ export default function Report() {
               </div>
             </div>
 
+            <div className="row g-3 mb-4 align-items-center justify-content-center">
+              <div className="col-auto">
+                <label className="col-form-label fw-bold">License plate</label>
+              </div>
+              <div className="col-2">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="..."
+                  name="plate"
+                  value={filter.plate}
+                  onChange={filterHandler}
+                />
+              </div>
+            </div>
+
             <div className="text-center mb-3">
-              <button className="btn btn-dark" type="submit">
+              <button
+                className="btn btn-danger"
+                type="button"
+                onClick={clearFilter}
+              >
+                Clear Filter
+              </button>
+              <button className="btn btn-dark ms-2" type="submit">
                 Apply Filter
               </button>
             </div>
@@ -164,11 +194,12 @@ export default function Report() {
         </div>
       </div>
 
+      {/* Table */}
       {reportData.length === 0 ? (
-        <h2 className="mb-2">Data not found</h2>
+        <h2 className="mb-4 d-flex justify-content-center">Data not found</h2>
       ) : (
         <div className="col-8 container table-responsive">
-          <table className=" table table-striped align-middle bg-white ">
+          <table className=" table table-striped table-hover align-middle bg-white ">
             <thead className="table-light bg-white">
               <tr style={{ textAlign: "center" }}>
                 <th scope="col">No</th>
@@ -183,7 +214,7 @@ export default function Report() {
               {reportData.map((el, i) => {
                 return (
                   <tr key={i} style={{ textAlign: "center" }}>
-                    <td>{i + 1}</td>
+                    <td className="fw-bold">{i + 1 + (page - 1) * 20}</td>
                     <td>{el.vehicleType}</td>
                     <td>{el.licensePlate}</td>
                     <td>{dateFormatter(el.startTime)}</td>
@@ -197,13 +228,40 @@ export default function Report() {
         </div>
       )}
 
+      {/* Pagination */}
       <div className="container d-flex justify-content-center">
         <div className="row">
           <div className="col">
             <nav>
               <ul className="pagination">
-                <li className="page-item"></li>
-                <li className="page-item">2</li>
+                <li className="page-item">
+                  <button className="page-link" onClick={prevPage}>
+                    Previous
+                  </button>
+                </li>
+                {(() => {
+                  let td = [];
+                  for (let i = 1; i <= totalPage; i++) {
+                    td.push(
+                      <li className="page-item">
+                        <button
+                          className="page-link"
+                          onClick={(e) => {
+                            setPage(i);
+                          }}
+                        >
+                          {i}
+                        </button>
+                      </li>
+                    );
+                  }
+                  return td;
+                })()}
+                <li className="page-item">
+                  <button className="page-link" onClick={nextPage}>
+                    Next
+                  </button>
+                </li>
               </ul>
             </nav>
           </div>

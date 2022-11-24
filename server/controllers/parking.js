@@ -8,7 +8,6 @@ class ParkingController {
   static async add(req, res, next) {
     try {
       const { startTime, endTime, vehicleType, licensePlate } = req.body;
-      console.log(req.body);
 
       if (!vehicleType) throw { name: "Vehicle type is required" };
       if (vehicleType !== "mobil" && vehicleType !== "motor")
@@ -35,10 +34,19 @@ class ParkingController {
 
   static async showAllData(req, res, next) {
     try {
-      let { type, startDate, endDate, page, size, min, max } = req.query;
+      let { type, startDate, endDate, page, size, min, max, plate } = req.query;
+
       const { limit, offset } = getPagination(page - 1, size);
 
-      if (min > max) throw { name: "Invalid parking fee value" };
+      if (min && max && +min > +max)
+        throw { name: "Invalid parking fee value" };
+
+      if (
+        startDate &&
+        endDate &&
+        new Date(startDate).getTime() > new Date(endDate).getTime()
+      )
+        throw { name: "Invalid date filter" };
 
       const option = {
         attributes: { exclude: ["createdAt", "updatedAt"] },
@@ -51,7 +59,7 @@ class ParkingController {
       if (!!type) {
         option.where = {
           ...option.where,
-          vehicleType: { [Op.iLike]: `%${type}%` },
+          vehicleType: { [Op.eq]: `${type}` },
         };
       }
 
@@ -98,9 +106,16 @@ class ParkingController {
         };
       }
 
-      let result = await ParkingData.findAll(option);
+      //! Filter by plate number
+      if (!!plate) {
+        option.where = {
+          ...option.where,
+          licensePlate: { [Op.iLike]: `%${plate}%` },
+        };
+      }
 
-      res.status(200).json({ result });
+      let result = await ParkingData.findAndCountAll(option);
+      res.status(200).json(result);
     } catch (err) {
       next(err);
     }

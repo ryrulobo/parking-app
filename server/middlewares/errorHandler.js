@@ -42,6 +42,10 @@ function errorHandler(err, req, res, next) {
       errCode = 400;
       message = "Min fee cannot be greater than the max fee";
       break;
+    case "Invalid date filter":
+      errCode = 400;
+      message = "Start date cannot be greater than the end date";
+      break;
   }
   res.status(errCode).json({ message });
 }
