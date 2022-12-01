@@ -49,7 +49,7 @@ A simple parking app application which allow user to add new parking data and se
 
   ```
   cd parking-app
-  npm run dev
+  npm start
   ```
 
 ## Endpoints
