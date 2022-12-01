@@ -1,6 +1,5 @@
 const request = require("supertest");
 const app = require("../app");
-const { ParkingData } = require("../models");
 const { sequelize } = require("../models");
 const { queryInterface } = sequelize;
 
