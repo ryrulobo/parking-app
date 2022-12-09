@@ -12,6 +12,8 @@ A simple parking app application which allow user to add new parking data and se
 
   ```
   npm install
+  npx sequelize db:create
+  npx sequelize db:migrate
   ```
 
   **Run and compile server scripts**
@@ -94,7 +96,7 @@ _201 - Created_
   }
   ```
 
-  _400 - Bad Request_
+_400 - Bad Request_
 
 - Body
 
@@ -158,7 +160,7 @@ _200 - OK_
   },
   ```
 
-  _400 - Bad Request_
+_400 - Bad Request_
 
 - Body
 
